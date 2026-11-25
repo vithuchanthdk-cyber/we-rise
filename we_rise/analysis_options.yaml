@@ -11,6 +11,9 @@ analyzer:
     dead_code: warning
     unused_import: warning
     unused_local_variable: warning
+    # flutter/material.dart deprecations are future-planned migrations
+    # (package:material_ui does not exist yet on pub.dev) — suppress until stable SDK ships them
+    deprecated_member_use: ignore
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"

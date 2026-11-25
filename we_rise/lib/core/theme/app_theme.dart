@@ -177,7 +177,7 @@ abstract final class AppTheme {
           color: colorScheme.onSurface,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(AppRadius.md),

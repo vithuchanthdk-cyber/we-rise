@@ -1,8 +1,17 @@
+import java.util.Properties
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
+}
+
+// Load key.properties if it exists (local dev) or fall back to env-vars (CI).
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -19,6 +28,23 @@ android {
         jvmTarget = "17"
     }
 
+    signingConfigs {
+        release {
+            // CI injects these via GitHub Secrets; locally they come from key.properties.
+            def storeFile    = keystoreProperties['storeFile']    ?: System.getenv('KEY_STORE_FILE')
+            def storePassword = keystoreProperties['storePassword'] ?: System.getenv('KEY_STORE_PASSWORD')
+            def keyAlias     = keystoreProperties['keyAlias']     ?: System.getenv('KEY_ALIAS')
+            def keyPassword  = keystoreProperties['keyPassword']  ?: System.getenv('KEY_PASSWORD')
+
+            if (storeFile && storeFile != '' && storePassword && storePassword != '') {
+                it.storeFile     = file(storeFile)
+                it.storePassword = storePassword
+                it.keyAlias      = keyAlias
+                it.keyPassword   = keyPassword
+            }
+        }
+    }
+
     defaultConfig {
         applicationId = "com.werise.chennai"
         minSdk = 23
@@ -28,10 +54,18 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            minifyEnabled = true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            // Use release key when available; fall back to debug for local dev without keystore.
+            signingConfig = (signingConfigs.release.storeFile != null)
+                ? signingConfigs.release
+                : signingConfigs.debug
         }
     }
 }

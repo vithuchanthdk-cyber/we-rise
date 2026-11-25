@@ -96,13 +96,17 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ...RejectionReason.values.map(
-                (r) => RadioListTile<RejectionReason>(
+                (r) => ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Radio<RejectionReason>(
+                    value: r,
+                    groupValue: selected,
+                    onChanged: (v) {
+                      if (v != null) setDialogState(() => selected = v);
+                    },
+                  ),
                   title: Text(r.displayName),
-                  value: r,
-                  groupValue: selected,
-                  onChanged: (v) {
-                    if (v != null) setDialogState(() => selected = v);
-                  },
+                  onTap: () => setDialogState(() => selected = r),
                 ),
               ),
               TextField(

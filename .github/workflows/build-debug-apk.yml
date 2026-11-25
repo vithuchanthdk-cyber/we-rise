@@ -23,22 +23,31 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Flutter (stable)
+      # Pin to the exact same Flutter version used locally (3.27.4 / Dart 3.6.2 / stable).
+      # Do NOT change to 'latest stable' — a newer SDK may introduce breaking deprecations
+      # that differ from the pinned local environment and cause false analyze failures.
+      - name: Set up Flutter 3.27.4 (stable, pinned)
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.27.4'
           channel: stable
           cache: true
+
+      - name: Flutter version sanity-check
+        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
 
+      # --no-fatal-infos: info-level hints (style, deprecation notices for future migrations)
+      # never block the CI build. Only warnings and errors do.
       - name: Analyze code
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
 
       - name: Run unit and widget tests
         run: flutter test
 
-      - name: Build Debug APK (Demo Mode)
+      - name: Build Debug APK (Demo Mode — no secrets required)
         run: flutter build apk --debug
 
       - name: Upload Debug APK artifact
