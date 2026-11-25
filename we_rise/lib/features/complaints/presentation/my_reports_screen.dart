@@ -114,13 +114,34 @@ class _MyReportsScreenState extends ConsumerState<MyReportsScreen> {
                           child: ListTile(
                             leading: const Icon(Icons.verified_outlined,
                                 color: AppColors.warning),
-                            title: Text(c.trackingId),
+                            title: Text(
+                              c.trackingId,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                             subtitle: Text(
-                                '${c.category.displayName} · ${c.wardId}'),
-                            trailing: FilledButton(
-                              onPressed: () =>
-                                  context.push('/complaint/${c.id}'),
-                              child: Text(l10n.confirmFixed),
+                              '${c.category.displayName} · ${c.wardId}',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            trailing: SizedBox(
+                              width: 110,
+                              child: FilledButton(
+                                style: FilledButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8),
+                                  visualDensity: VisualDensity.compact,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
+                                onPressed: () =>
+                                    context.push('/complaint/${c.id}'),
+                                child: Text(
+                                  l10n.confirmFixed,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
                             ),
                             onTap: () => context.push('/complaint/${c.id}'),
                           ),
@@ -136,10 +157,20 @@ class _MyReportsScreenState extends ConsumerState<MyReportsScreen> {
                     ),
                     ...mine.map(
                       (c) => ListTile(
-                        title: Text(c.trackingId),
-                        subtitle:
-                            Text('${c.category.displayName} · ${c.wardId}'),
-                        trailing: StatusChip(status: c.status, small: true),
+                        title: Text(
+                          c.trackingId,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        subtitle: Text(
+                          '${c.category.displayName} · ${c.wardId}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        trailing: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 110),
+                          child: StatusChip(status: c.status, small: true),
+                        ),
                         onTap: () => context.push('/complaint/${c.id}'),
                       ),
                     ),

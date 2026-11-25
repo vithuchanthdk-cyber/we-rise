@@ -332,8 +332,11 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                     child: Text(
                       complaint.trackingId,
                       style: AppTextStyles.titleLarge,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                   ),
+                  const SizedBox(width: 8),
                   StatusChip(status: complaint.status),
                 ],
               ),
@@ -526,10 +529,14 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      '${comp.label} (${(comp.weight * 100).round()}%)',
-                                      style: AppTextStyles.titleSmall,
+                                    Expanded(
+                                      child: Text(
+                                        '${comp.label} (${(comp.weight * 100).round()}%)',
+                                        style: AppTextStyles.titleSmall,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
+                                    const SizedBox(width: 8),
                                     Text(
                                       '+${(comp.contribution * 100).toStringAsFixed(1)}',
                                       style: AppTextStyles.caption,

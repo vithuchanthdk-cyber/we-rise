@@ -119,11 +119,21 @@ class _AuthorityScreenState extends ConsumerState<AuthorityScreen> {
                       size: 18,
                     ),
                   ),
-                  title: Text('${c.category.displayName} · ${c.wardId}'),
-                  subtitle: Row(
+                  title: Text(
+                    '${c.category.displayName} · ${c.wardId}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                  subtitle: Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Text(c.trackingId, style: AppTextStyles.caption),
-                      const SizedBox(width: 8),
+                      Text(
+                        c.trackingId,
+                        style: AppTextStyles.caption,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       PriorityBadge(score: c.priorityScore),
                     ],
                   ),

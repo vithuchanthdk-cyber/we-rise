@@ -22,19 +22,31 @@ void main() {
   );
 }
 
+bool _appHasStarted = false;
+
 Future<void> _startApp() async {
   // Must be first; required before any platform channel calls.
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Capture Flutter framework errors (widget build errors, etc.) and show fallback.
+  // Capture Flutter framework errors (widget build errors, etc.)
+  // Only show fallback app if an error occurs BEFORE the first frame has rendered or during init.
+  // Rendering/layout warnings (such as RenderFlex overflow) should be logged without crashing or replacing the UI.
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
-    _showFallback(details.exception, details.stack ?? StackTrace.current);
+    if (!_appHasStarted) {
+      _showFallback(details.exception, details.stack ?? StackTrace.current);
+    } else {
+      debugPrint('UI Error after startup ignored for fallback: ${details.exception}');
+    }
   };
 
   // Capture platform dispatcher errors (async gaps not in a zone).
   PlatformDispatcher.instance.onError = (error, stack) {
-    _showFallback(error, stack);
+    if (!_appHasStarted) {
+      _showFallback(error, stack);
+      return true;
+    }
+    debugPrint('PlatformDispatcher error: $error\n$stack');
     return true; // mark as handled
   };
 
@@ -66,6 +78,10 @@ Future<void> _startApp() async {
       child: WeRiseApp(),
     ),
   );
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    _appHasStarted = true;
+  });
 }
 
 // ── Error Fallback ─────────────────────────────────────────────────────────

@@ -168,10 +168,16 @@ class _PartnerDashboardScreenState
               ...tasks.map(
                 (t) => Card(
                   child: ListTile(
-                    title: Text('Task ${t.id} · Complaint ${t.complaintId}'),
+                    title: Text(
+                      'Task ${t.id} · Complaint ${t.complaintId}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                     subtitle: Text(
                       '${t.volunteerIds.length} volunteer(s) · '
                       '${t.isCompleted ? 'Completed' : 'Open'}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     trailing: t.volunteerIds.contains('u-volunteer-1')
                         ? const Chip(label: Text('Assigned'))

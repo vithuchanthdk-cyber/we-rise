@@ -276,10 +276,14 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              '${complaints.length} public issues',
-                              style: AppTextStyles.titleMedium,
+                            Expanded(
+                              child: Text(
+                                '${complaints.length} public issues',
+                                style: AppTextStyles.titleMedium,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
+                            const SizedBox(width: 8),
                             Text(
                               'Sorted by priority',
                               style: AppTextStyles.caption.copyWith(
@@ -316,6 +320,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         child: Text(
                           '${c.category.displayName} · ${_wardName(c.wardId)}',
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ),
                       if (c.escalated)
@@ -340,10 +345,16 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         ),
                     ],
                   ),
-                  subtitle: Row(
+                  subtitle: Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Text(c.trackingId, style: AppTextStyles.caption),
-                      const SizedBox(width: 8),
+                      Text(
+                        c.trackingId,
+                        style: AppTextStyles.caption,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       PriorityBadge(score: c.priorityScore),
                     ],
                   ),

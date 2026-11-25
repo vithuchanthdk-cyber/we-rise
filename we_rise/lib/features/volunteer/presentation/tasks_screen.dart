@@ -58,10 +58,14 @@ class TasksScreen extends ConsumerWidget {
                   ),
                   title: Text(
                     '${comp?.category.displayName ?? 'Task'} · ${comp?.wardId ?? ''}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                   subtitle: Text(
                     'Supervisor: ${org?.name ?? t.partnerOrgId} · '
                     '${t.volunteerIds.length} joined · ${t.estimatedHours}h',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => context.push('/task/${t.id}'),

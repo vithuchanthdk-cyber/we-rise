@@ -57,8 +57,11 @@ class SolvedGalleryScreen extends ConsumerWidget {
                           child: Text(
                             '${c.category.displayName} · ${c.wardId}',
                             style: AppTextStyles.titleMedium,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
                         ),
+                        const SizedBox(width: 8),
                         StatusChip(status: c.status, small: true),
                       ],
                     ),
@@ -66,6 +69,8 @@ class SolvedGalleryScreen extends ConsumerWidget {
                     Text(
                       '${c.trackingId} · Resolved in $days day(s)',
                       style: AppTextStyles.caption,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Row(

@@ -52,9 +52,16 @@ class ModerationScreen extends ConsumerWidget {
                 child: ListTile(
                   title: Row(
                     children: [
-                      Expanded(child: Text(c.trackingId)),
+                      Expanded(
+                        child: Text(
+                          c.trackingId,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
                       if (isFlagged || hasGallery)
                         Container(
+                          margin: const EdgeInsets.only(left: 4),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 6,
                             vertical: 2,
@@ -76,7 +83,11 @@ class ModerationScreen extends ConsumerWidget {
                         ),
                     ],
                   ),
-                  subtitle: Text('${c.category.displayName} · ${c.wardId}'),
+                  subtitle: Text(
+                    '${c.category.displayName} · ${c.wardId}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
