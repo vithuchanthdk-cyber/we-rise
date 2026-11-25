@@ -55,12 +55,19 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug"
+            // Do NOT add applicationIdSuffix here.
+            // Many Flutter plugins (image_picker, geolocator, flutter_image_compress)
+            // register FileProvider authorities as "${applicationId}.fileprovider".
+            // A suffix changes the installed package name and breaks those authorities
+            // in debug builds, causing immediate crashes on real devices.
+            debuggable = true
         }
         release {
-            minifyEnabled = true
-            shrinkResources = true
+            // Minification is OFF for now — enable when you have full ProGuard rules.
+            // A mistaken keep-rule omission on a real device causes silent crashes
+            // that are hard to debug without ADB. Flip to true only after testing.
+            minifyEnabled = false
+            shrinkResources = false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             // Use release key when available; fall back to debug for local dev without keystore.
             signingConfig = (signingConfigs.release.storeFile != null)

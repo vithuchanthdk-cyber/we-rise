@@ -45,3 +45,5 @@ build/
 **/ios/Flutter/ephemeral/
 **/ios/Pods/
 **/ios/.symlinks/
+
+*.apk
