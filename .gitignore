@@ -1,0 +1,47 @@
+# Secrets, keystores & environment files (NEVER commit)
+*.jks
+*.keystore
+android/key.properties
+**/android/key.properties
+google-services.json
+**/google-services.json
+GoogleService-Info.plist
+.env
+.env.*
+!.env.example
+supabase_keys.json
+
+# Flutter / Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+**/build/
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+*.log
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Android / Gradle
+**/android/.gradle/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/**/GeneratedPluginRegistrant.kt
+
+# iOS
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral/
+**/ios/Pods/
+**/ios/.symlinks/
