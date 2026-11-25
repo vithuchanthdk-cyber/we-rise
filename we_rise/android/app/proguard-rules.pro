@@ -1,4 +1,7 @@
 # WE RISE — ProGuard / R8 rules
+# Keep MainActivity and Android components
+-keep class com.werise.chennai.MainActivity { *; }
+
 # Keep Flutter/Dart entry points
 -keep class io.flutter.** { *; }
 -keep class io.flutter.plugins.** { *; }
